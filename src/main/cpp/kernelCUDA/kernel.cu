@@ -17,7 +17,7 @@ __host__ void add(int* dest, const int* src1, const int* src2, size_t arraySize)
         cudaMemcpy(device_a, src1, arraySize * sizeof(int), cudaMemcpyHostToDevice);
         cudaMemcpy(device_b, src2, arraySize * sizeof(int), cudaMemcpyHostToDevice);
     
-        addKernel<<<(arraySize + 128) / 128, 128>>>(device_c, device_a, device_b, arraySize);
+        addKernel<<<(arraySize + 127) / 128, 128>>>(device_c, device_a, device_b, arraySize);
     
         cudaMemcpy(dest, device_c, arraySize * sizeof(int), cudaMemcpyDeviceToHost);
  
