@@ -24,4 +24,4 @@ __host__ void add(int* dest, const int* src1, const int* src2, size_t arraySize)
         cudaFree(device_a);
         cudaFree(device_b);
         cudaFree(device_c);
-    }
+}
