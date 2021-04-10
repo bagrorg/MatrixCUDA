@@ -18,7 +18,7 @@ JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_add (JNIEnv 
     env->ReleasePrimitiveArrayCritical(src2, s2, 0);
 }
 
-JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum (JNIEnv *, jobject, jint dest, jintArray src) {
+JNIEXPORT jint JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum (JNIEnv *env, jobject obj, jintArray src) {
     int *s = (int *) env->GetPrimitiveArrayCritical(src, NULL);
     int n = env->GetArrayLength(src);
     int d = 0;
@@ -26,4 +26,6 @@ JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum (JNIEnv 
     sum(&d, s, n);
 
     env->ReleasePrimitiveArrayCritical(src, s, 0);
+
+    return d;
 }

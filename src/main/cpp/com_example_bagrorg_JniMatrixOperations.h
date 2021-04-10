@@ -18,10 +18,10 @@ JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_add
 /*
  * Class:     com_example_bagrorg_JniMatrixOperations
  * Method:    sum
- * Signature: (I[I)V
+ * Signature: ([I)I
  */
-JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum
-  (JNIEnv *, jobject, jint, jintArray);
+JNIEXPORT jint JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum
+  (JNIEnv *, jobject, jintArray);
 
 #ifdef __cplusplus
 }

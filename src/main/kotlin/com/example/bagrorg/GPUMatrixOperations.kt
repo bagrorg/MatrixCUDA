@@ -12,10 +12,5 @@ object GPUMatrixOperations : VectorOperations {
         return dest
     }
 
-    override fun sum(src: Vector): Long {
-        var n : Int = 0
-        JniMatrixOperations.sum(n, src.vec)
-        return n
-    }
-
+    override fun sum(src: Vector) = JniMatrixOperations.sum(src.vec)
 }

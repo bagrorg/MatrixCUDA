@@ -1,9 +1,9 @@
 ﻿#include "kernel.cuh"
 
 __global__ void addKernel(int* dest, const int* src1, const int* src2, size_t n) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    if (i < n)
-        dest[i] = src1[i] + src2[i];
+        int i = blockIdx.x * blockDim.x + threadIdx.x;
+        if (i < n)
+            dest[i] = src1[i] + src2[i];
 }
 
 __host__ void add(int* dest, const int* src1, const int* src2, size_t arraySize) {
@@ -26,35 +26,35 @@ __host__ void add(int* dest, const int* src1, const int* src2, size_t arraySize)
         cudaFree(device_c);
 }
 
-__global__ void sumKernel(long int* dest, const int* src, size_t arraySize) {
+__global__ void sumKernel(int* dest, const int* src, size_t arraySize) {
         int globInd = blockIdx.x * blockDim.x + threadIdx.x;
         int localInd = threadIdx.x;
-        __local__ int* localPart[WORK_GROUP_SIZE];
+        __shared__ int localPart[WORK_GROUP_SIZE];
 
-        if (globInd >= n) localPart[localInd] = 0;
+        if (globInd >= arraySize) localPart[localInd] = 0;
         else localPart[localInd] = src[globInd];
-
-        for (unsigned int length = WORK_GROUP_SIZE / 2; len > 0; len /= 2) {
+        __syncthreads();
+        for (unsigned int len = WORK_GROUP_SIZE / 2; len > 0; len /= 2) {
             if (localInd < len) localPart[localInd] = localPart[localInd] + localPart[localInd + len];
             if (len > WARP_SIZE)  __syncthreads();
             else if (localInd >= len) return;
         }
 
-        if (localInd == 0) *dest += localPart[0];
+        if (localInd == 0) atomicAdd(dest, localPart[0]);
 }
 
-__host__ void sum(long int* dest, const int* src, size_t arraySize) {
+__host__ void sum(int* dest, const int* src, size_t arraySize) {
         int *device_arr;
-        long int *res;
+        int *res;
         cudaMalloc((void **) &device_arr, arraySize * sizeof(int));
-        cudaMalloc((void **) &res, sizeof(long int));
+        cudaMalloc((void **) &res, sizeof(int));
 
         cudaMemcpy(device_arr, src, arraySize * sizeof(int), cudaMemcpyHostToDevice);
-        cudaMemcpy(res, dest, sizeof(long int), cudaMemcpyHostToDevice);
+        cudaMemcpy(res, dest, sizeof(int), cudaMemcpyHostToDevice);
 
         sumKernel<<<(arraySize + WORK_GROUP_SIZE - 1) / WORK_GROUP_SIZE, WORK_GROUP_SIZE>>>(res, device_arr, arraySize);
 
-        cudaMemcpy(dest, res, sizeof(long int), cudaMemcpyDeviceToHost);
+        cudaMemcpy(dest, res, sizeof(int), cudaMemcpyDeviceToHost);
 
         cudaFree(device_arr);
         cudaFree(res);
