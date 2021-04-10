@@ -4,5 +4,6 @@ data class Vector(val n: Int, val vec: IntArray)
 
 
 interface VectorOperations {
-    fun add(dest : Vector, src1 : Vector, src2 : Vector)
+    fun add(src1: Vector, src2: Vector) : Vector
+    fun sum(src : Vector) : Int
 }

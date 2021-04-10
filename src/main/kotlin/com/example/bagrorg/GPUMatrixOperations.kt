@@ -1,5 +1,21 @@
 package com.example.bagrorg
 
+import java.lang.RuntimeException
+
 object GPUMatrixOperations : VectorOperations {
-    override fun add(dest: Vector, src1: Vector, src2 : Vector) = JniMatrixOperations.add(dest.vec, src1.vec, src2.vec)
+    override fun add(src1: Vector, src2: Vector) : Vector {
+        if (src1.n != src2.n) throw RuntimeException("Inappropriate vector sizes")
+
+        var dest = Vector(src1.n, IntArray(src1.n) { 0 })
+        JniMatrixOperations.add(dest.vec, src1.vec, src2.vec)
+
+        return dest
+    }
+
+    override fun sum(src: Vector): Long {
+        var n : Int = 0
+        JniMatrixOperations.sum(n, src.vec)
+        return n
+    }
+
 }

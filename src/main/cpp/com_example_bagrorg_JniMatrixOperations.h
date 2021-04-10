@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_add
   (JNIEnv *, jobject, jintArray, jintArray, jintArray);
 
+/*
+ * Class:     com_example_bagrorg_JniMatrixOperations
+ * Method:    sum
+ * Signature: (I[I)V
+ */
+JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_sum
+  (JNIEnv *, jobject, jint, jintArray);
+
 #ifdef __cplusplus
 }
 #endif
