@@ -7,7 +7,7 @@ In this project I implemented `add` and `sum` function for vectors.
  - `GPUMatrixOperations` is an object that appeals to `JniMatrixOperations`. `JniMatrixOperations` contains external funcs, that will use C++ code with JNI.
  After Kotlin explanation follows C++ code.
  - `matrix.cpp` implements `add` function from `JniMatrixOperations`. It appeals to CUDA code.
- - `add` function, that calls in `matrix.cpp`, is an intermediary between C++ code and CUDA code. `add` function allocating memory on the device and calls `kernelAdd` function which performed on a device.
+ - `add` function, that calls in `matrix.cpp`, is an intermediary between C++ code and CUDA code. `add` function allocates memory on the device and calls `kernelAdd` function which performed on a device.
  - similarly with `sum` function
  ## About CUDA
  In CUDA code you can see `WARP_SIZE` and `WORK_GROUP_SIZE` defines. I set `WARP_SIZE` to 32 because most if not all Nvidia cards have warp size equal to 32.
