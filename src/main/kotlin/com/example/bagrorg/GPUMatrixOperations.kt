@@ -2,8 +2,7 @@ package com.example.bagrorg
 
 import java.lang.RuntimeException
 
-object GPUMatrixOperations : VectorOperations {
-
+object GPUMatrixOperations : MatrixOperations {
     fun setLib(path: String) {
         JniMatrixOperations.libPath = path
         JniMatrixOperations.load()

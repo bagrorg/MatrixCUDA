@@ -3,7 +3,6 @@ package com.example.bagrorg
 import java.lang.RuntimeException
 
 object JniMatrixOperations {
-
     var libPath : String = "NO_PATH"
     fun load() {
         if(libPath == "NO_PATH") throw RuntimeException("No lib path")

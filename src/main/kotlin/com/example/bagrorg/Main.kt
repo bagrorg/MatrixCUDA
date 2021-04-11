@@ -1,12 +1,9 @@
 package com.example.bagrorg
 
-import java.lang.RuntimeException
-
 fun main(args: Array<String>) {
-
     if(args.isNotEmpty()) GPUMatrixOperations.setLib(args[0])
 
-    var vector = Vector(5000, IntArray(5000){ 0 })
+    var vector : Vector
     var vector2 = Vector(5000, IntArray(5000){ it + 1 })
     var vector3 = Vector(5000, IntArray(5000){ it + 1 })
 

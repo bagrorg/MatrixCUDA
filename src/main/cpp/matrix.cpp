@@ -10,7 +10,6 @@ JNIEXPORT void JNICALL Java_com_example_bagrorg_JniMatrixOperations_add (JNIEnv 
 
     int n = env->GetArrayLength(src1);
 
-
     add(dst, s1, s2, n);
 
     env->ReleasePrimitiveArrayCritical(dest, dst, 0);
